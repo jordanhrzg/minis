@@ -1,0 +1,37 @@
+body {
+    font: 14px "Century Gothic", Futura, sans-serif;
+    margin: 20px;
+}
+
+img {
+    border: 1px solid black;
+    width: 500px;
+}
+
+.form {
+    width: 50%;
+    border: 1px solid black;
+}
+
+.formInput {
+    padding: 10px;
+}
+
+/*.chart {*/
+/*    !*height: 300px;*!*/
+/*    width: 500px;*/
+/*    padding: 0;*/
+/*    text-align: center;*/
+/*}*/
+
+.result {
+    border: 1px solid black;
+    width: 500px;
+    text-align: left;
+    padding: 10px;
+}
+
+.stats {
+    padding: 10px;
+}
+
