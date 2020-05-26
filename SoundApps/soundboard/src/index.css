@@ -1,0 +1,34 @@
+body {
+    font: 14px "Century Gothic", Futura, sans-serif;
+    margin: 20px;
+    background-color: #09182a;
+}
+
+h1 {
+    background-color: #b3b3b3;
+    width: 1090px;
+    padding: 10px;
+}
+
+button {
+    width: 200px;
+    height: 75px;
+    font: 14px "Century Gothic", Futura, sans-serif;
+    background-color: #1D4E89;
+    color: #b3b3b3;
+    border: 2px #1D4E89 solid;
+}
+
+button.playing {
+    border: 2px hotpink solid;
+}
+button.paused {
+    border: 2px #1D4E89 solid;
+    /*border: 2px yellowgreen solid;*/
+}
+
+.button-array{
+    display: grid;
+    grid-gap: 10px 10px;
+    grid-template-columns: 200px 200px 200px 200px 200px 200px;
+}
