@@ -25,7 +25,7 @@ app.get('/', cors({'Access-Control-Allow-Origin': 'http://localhost:3000'}), (re
             location: s
         }
     });
-    
+
     res.send(sounds);
     console.log(`Sending ${sounds.length} track listings to ${req.headers.origin}`);
 });
