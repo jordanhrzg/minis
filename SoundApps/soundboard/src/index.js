@@ -70,40 +70,55 @@ class SoundBoard extends React.Component {
     async handleClick(i){
         let audioArray = this.state.audio;
         let trackLocation = calculateLocation(i.target.innerHTML);
+        let targetTrack = audioArray.filter(({location}) => location === trackLocation)[0];
 
         if(i.target.className === 'paused'){
-            console.log(`Getting ${trackLocation} from server & looping play ...`);
+            if(targetTrack.track !== null){
+                //already constructed audio context from API call, resume playing
+                console.log(`Resuming ${trackLocation} ...`);
+                audioArray.some((obj) => {
+                    if(obj.location === trackLocation){
+                        obj.track.resume().then().catch();
+                        obj.playing = true;
+                        return true;
+                    } else {
+                        return false;
+                    }
+                });
+            } else {
+                //construct audio context with API call & start playing in loop
+                console.log(`Getting ${trackLocation} from server & looping play ...`);
 
-            //ref: https://developer.mozilla.org/en-US/docs/Web/Guide/Audio_and_video_delivery
-            let context = new AudioContext();
-            let request = new XMLHttpRequest();
-            let source = null;
-            request.open('GET', `http://localhost:3001/track?location=${trackLocation}`, true);
-            request.responseType = 'arraybuffer';
-            request.onload = function(){
-                context.decodeAudioData(request.response, function(buffer){
-                    source = context.createBufferSource();
-                    source.buffer = buffer;
-                    source.connect(context.destination);
-                    source.start(0);
-                    source.loop = true;
-                })
-            };
-            request.send();
+                //ref: https://developer.mozilla.org/en-US/docs/Web/Guide/Audio_and_video_delivery
+                let context = new AudioContext();
+                let request = new XMLHttpRequest();
+                let source = null;
+                request.open('GET', `http://localhost:3001/track?location=${trackLocation}`, true);
+                request.responseType = 'arraybuffer';
+                request.onload = function(){
+                    context.decodeAudioData(request.response, function(buffer){
+                        source = context.createBufferSource();
+                        source.buffer = buffer;
+                        source.connect(context.destination);
+                        source.start(0);
+                        source.loop = true;
+                    })
+                };
+                request.send();
 
-            audioArray.some((obj) => {
-                if(obj.location === trackLocation){
-                    obj.track = context;
-                    obj.playing = true;
-                    return true;
-                } else {
-                    return false;
-                }
-            });
-
+                audioArray.some((obj) => {
+                    if(obj.location === trackLocation){
+                        obj.track = context;
+                        obj.playing = true;
+                        return true;
+                    } else {
+                        return false;
+                    }
+                });
+            }
         } else {
+            //pause
             console.log(`Pausing ${trackLocation} ...`);
-
             audioArray.some(function(obj){
                 if(obj.location === trackLocation){
                     obj.track.suspend();
@@ -115,6 +130,7 @@ class SoundBoard extends React.Component {
             });
         }
 
+        //update state with play/pause update
         this.setState({
             audio: audioArray
         });
@@ -137,7 +153,17 @@ class SoundBoard extends React.Component {
                 <script>
                     {JSON.stringify(this.soundCall())}
                 </script>
-                <h1>Sound Board Testing</h1>
+                <h1><a href="https://samples.landr.com/packs/pantone-classic-blue-sample-pack">Pantone 2020 Sample</a> Sound Effects</h1>
+                <div className={"directions"}>
+                    <h3>Welcome!</h3>
+                    <p style={{"text-decoration": "underline"}}>Directions</p>
+                    <ul>
+                        <li><span>Select a sound effect below to play in a loop.</span></li>
+                        <li><span>Select the sound effect again to stop the loop.</span></li>
+                        <li><span>Select several sound effects to play with different layers of sound.</span></li>
+                        <li><span>Have fun!</span></li>
+                    </ul>
+                </div>
                 <div className={"button-array"}>
                     {buttonArray}
                 </div>

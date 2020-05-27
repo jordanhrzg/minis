@@ -9,8 +9,8 @@ function parseName(url){
     let name = url.split('COY_')[1].split('.')[0];
     name = name.split('_');
     result.bpm = name.filter(n => n.endsWith('bpm'))[0];
-    result.key = name.filter(n => n.length <= 2)[0];
-    result.name = name.filter(n => !n.endsWith('bpm') && n.length > 2).join(' ');
+    result.key = name.filter(n => n.length <= 2 || n.endsWith('7'))[0];
+    result.name = name.filter(n => !n.endsWith('bpm') && n.length > 2 && !n.endsWith('7')).join(' ');
 
     return result;
 }
