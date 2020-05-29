@@ -38,4 +38,4 @@ app.get('/track', cors({'Access-Control-Allow-Origin': 'http://localhost:3000'})
     console.log(`Sending ${requestedResource} to ${req.headers.origin} ...`);
 });
 
-app.listen(3001);
+app.listen(3001, () => console.log("Sound Server listening on port 3001 ..."));
