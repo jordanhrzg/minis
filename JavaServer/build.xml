@@ -1,0 +1,45 @@
+<project name="JavaServer for Pet Lovers" default="targets" basedir=".">
+
+    <target name="targets">
+        <echo message="targets are ..."/>
+        <echo message="base directory is: ${basedir}"/>
+        <echo message="Start Server: java -cp classes/;lib/* sample.PetServer"/>
+
+        <echo message="test client actions with curl scripts:"/>
+        <echo message="     GET all pets:       curl 127.0.0.1/pets"/>
+        <echo message="     GET pet by name:    curl 127.0.0.1/pets/L.B."/>
+        <echo message='     POST new pet:       curl -X POST 127.0.0.1:8080/pets -d "{"name":"Sparkles", "type":"unicorn", age: 1001}"'/>
+        <echo message="     DELETE pet by name: curl -X DELETE 127.0.0.1:8080/pets/Yoez"/>
+    </target>
+
+    <path id="compile.classpath">
+        <pathelement location="classes"/>
+        <fileset dir="${basedir}/lib">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="clean">
+        <delete dir="classes" failonerror="false"/>
+        <!--delete object and dist dirs too?-->
+    </target>
+
+    <target name="prepare">
+        <mkdir dir="classes"/>
+    </target>
+
+    <target name="compile" depends="prepare" description="compile java resources">
+        <javac srcdir="src" includeantruntime="false" destdir="classes">
+            <classpath refid="compile.classpath"/>
+        </javac>
+    </target>
+
+    <target name="build" depends="prepare" description="build the java server">
+        <!--echo message="server: java -cp classes:lib/* sample.PetServer"/-->
+        <echo message="Start Server: java -cp classes/;lib/* sample.PetServer"/>
+        <javac srcdir="src/sample" destdir="classes" includeantruntime="false">
+            <classpath refid="compile.classpath"/>
+        </javac>
+    </target>
+
+</project>

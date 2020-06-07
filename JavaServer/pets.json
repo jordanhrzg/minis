@@ -1,0 +1,22 @@
+{
+    "Zoey": {
+        "name": "Zoey",
+        "type": "dog",
+        "age": 10
+    },
+    "Ralph": {
+        "name": "Ralph",
+        "type": "fish",
+        "age": 4
+    },
+    "Speedy": {
+        "name": "Speedy",
+        "type": "turtle",
+        "age": 2
+    },
+    "L.B.": {
+        "name": "L.B.",
+        "type": "cat",
+        "age": 12
+    }
+}
